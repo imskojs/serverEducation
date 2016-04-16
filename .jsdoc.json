@@ -1,0 +1,42 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc"
+    ]
+  },
+  "source": {
+    "include": [
+      "api/controllers",
+      "api/models",
+      "api/policies",
+      "api/services"
+    ],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "template": "./node_modules/ink-docstrap/template"
+  },
+  "templates": {
+    "systemName": "Shopping Server",
+    "footer": "Ionic Workshop",
+    "copyright": "Applicat",
+    "includeDate": "true",
+    "navType": "vertical",
+    "theme": "cosmo",
+    "linenums": "true",
+    "collapseSymbols": "true",
+    "inverseNav": "true",
+    "outputSourceFiles": "true",
+    "outputSourcePath": "true",
+    "dateFormat": "YYYY/MM/dd"
+  }
+}
