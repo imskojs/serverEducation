@@ -1,3 +1,3 @@
 # shoppingServer
 
-a [Sails](http://sailsjs.org) application
+a ShoppyingServer for ApplicatWorkshop by Andy Shin
