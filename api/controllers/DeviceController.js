@@ -9,17 +9,93 @@
  *
  */
 
+
+/**
+ * 기기에 대한 요청을 처리해주는 Controller.
+ * @module DeviceController
+ */
 module.exports = {
   pushAll: pushAll,
   register: register,
 };
 
-//TODO: Need to implement this
+
+/**
+ *
+ *  전체 푸시 메세지를 보낸다
+ *
+ *  변수:<br>
+ *  <ul>
+ *    <li>(<span style="color:red;">필수</span>)title: "푸시 메세지 제목"</li>
+ *    <li>(<span style="color:red;">필수</span>)message: "푸시 메세지 내용"</li>
+ *  <ul>
+ *
+ * @param req {JSON}
+ * @param res {JSON}
+ * @return {JSON} 푸시 메세지를 보낸다.
+ *
+ */
 function pushAll() {
 
+  // 모든 변수를 하나의 Object로 가져온다
+  var push = req.allParams();
+
+  // 필수 변수가 있는지 확인
+  if (!push.title || !push.message)
+    return res.send(400, {message: "모든 변수를 입력해주세요."});
+
+  Device.find()
+    .then(function (devices) {
+      PushService.sendAll(devices, title, message);
+      res.send(200, {
+        message: "Message sent."
+      });
+    })
+    .catch(function (err) {
+      sails.log.error(err);
+      return res.send(500, {
+        message: "기기 등록을 실패 했습니다."
+      });
+
+    });
 }
 
-//TODO: Need to implement this
+/**
+ *
+ *  기기를 푸시메세지에 등록 한다
+ *
+ *  변수:<br>
+ *  <ul>
+ *    <li>(<span style="color:red;">필수</span>)deviceId: "기기 아이디"</li>
+ *    <li>(<span style="color:red;">필수</span>)platform: "기기 플랫폼"</li>
+ *  <ul>
+ *
+ * @param req {JSON}
+ * @param res {JSON}
+ * @return {JSON} 기기를 푸시메세지에 등록 한다.
+ *
+ */
 function register() {
 
+  // 모든 변수를 하나의 Object로 가져온다
+  var device = req.allParams();
+
+  // 필수 변수가 있는지 확인
+  if (!device.deviceId || !device.platform)
+    return res.send(400, {message: "모든 변수를 입력해주세요."});
+
+  Device.findOrCreate({
+      deviceId: device.deviceId
+    }, device)
+    .then(function (createdDevice) {
+      res.send(200, {
+        device: createdDevice
+      });
+    })
+    .catch(function (err) {
+      sails.log.error(err);
+      return res.send(500, {
+        message: "기기 등록을 실패 했습니다."
+      });
+    });
 }

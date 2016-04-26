@@ -11,6 +11,8 @@
 
 /** @ignore */
 var validator = require('validator');
+var Promise = require('bluebird');
+var bcrypt = require('bcryptjs');
 var associations = ['profilePhoto', 'reviews', 'orders', 'devices',
   'owner', 'createdBy', 'updatedBy'];
 
@@ -44,6 +46,9 @@ module.exports = {
   schema: false,
   attributes: {
 
+    email: {type: 'email', unique: true, index: true},
+    password: {type: 'string', minLength: 8},
+
     /** Associations */
     profilePhoto: {model: 'photo'},
     reviews: {collection: 'Review', via: 'owner'},
@@ -53,8 +58,54 @@ module.exports = {
     createdBy: {model: 'User'},
     updatedBy: {model: 'User'}
   },
+  // Override the default toJSON method
+  toJSON: function () {
+    var obj = this.toObject();
+    delete obj.password;
+    return obj;
+  },
   isAssociation: function (propName) {
     return validator.isIn(propName, associations);
+  },
+  beforeCreate: function (user, next) {
+    hashPassword(user, next);
+  },
+  beforeUpdate: function (user, next) {
+    hashPassword(user, next);
+  },
+  validatePassword: function (password) {
+    return new Promise(function (resolve, reject) {
+      bcrypt.compare(password, this.password, function (err, res) {
+        if (err) {
+          return reject(err);
+        }
+
+        if (!res) {
+          reject({'error': '비밀번호가 들렷습니다.'});
+        } else {
+          resolve(null, true);
+        }
+      });
+    });
   }
 };
+
+function hashPassword(user, next) {
+  if (user.password) {
+    var t0 = new Date().valueOf();
+    bcrypt.hash(user.password, 10, function (err, hash) {
+      if (err) {
+        sails.log.error(err);
+        throw err;
+      }
+      user.password = hash;
+      var t1 = new Date().valueOf();
+      sails.log.silly('hashed password for user in', (t1 - t0), 'ms');
+      next(null, user);
+    });
+  }
+  else {
+    next(null, user);
+  }
+}
 

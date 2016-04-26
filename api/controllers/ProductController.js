@@ -30,6 +30,9 @@ module.exports = {
  ********************************************************/
 
 /**
+ *
+ * 상품 검색
+ *
  *  변수:<br>
  *  <ul>
  *    <li>search: "이 키워드를 이름으로 가지고 있는 상품을 검색 한다"</li>
@@ -60,7 +63,6 @@ function find(req, res) {
       }
     }
 
-
   // sort 변수 포함 확인
   if (params.sort)
     query.sort = params.sort;
@@ -76,7 +78,6 @@ function find(req, res) {
   // 넘길 data 수 포함 확인
   if (params.skip && validator.isInt(params.skip))
     query.skip = params.skip;
-
 
   // create promise ref
   var queryPromise = Product.find(query);
@@ -112,6 +113,9 @@ function find(req, res) {
 }
 
 /**
+ *
+ *  특정 상품에 상세 정보를 가져온다
+ *
  *  변수:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 상품을 가져온다"</li>
@@ -131,7 +135,6 @@ function findOne(req, res) {
   // 필수 변수가 있는지 확인
   if (!params.id)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
-
 
   // Query를 만들기 준비
   var query = {
@@ -166,6 +169,9 @@ function findOne(req, res) {
 }
 
 /**
+ *
+ *  새로운 상품을 만든다
+ *
  *  요청 body:<br>
  *  <ul>
  *    <li>name: "상품이름"</li>
@@ -212,6 +218,9 @@ function create(req, res) {
 }
 
 /**
+ *
+ *  상품을 수정한다
+ *
  *  요청 body:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 상품을 수정한다"</li>
@@ -263,14 +272,17 @@ function update(req, res) {
 }
 
 /**
+ *
+ *  상품을 지운다
+ *
  *  변수:<br>
  *  <ul>
- *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 상품을 수정한다"</li>
+ *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 상품을 지운다"</li>
  *  <ul>
  *
  * @param req {JSON}
  * @param res {JSON}
- * @return {JSON} 제시한 아이디의 상품을 지운고 지워진 상품을 받는다.
+ * @return {JSON} 제시한 아이디의 상품을 지우고 지워진 상품을 받는다.
  *
  */
 function destroy(req, res) {

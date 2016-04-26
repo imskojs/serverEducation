@@ -43,7 +43,7 @@ module.exports = {
   attributes: {
     /** Properties */
     content: {type: 'String', required: true},
-    stars: {type: 'Integer'},
+    stars: {type: 'Integer', required: true},
 
     /** Associations */
     product: {model: 'Product'},

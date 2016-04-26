@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Shopping Server Modules</title>
+	<title>Shopping Server Module: DeviceController</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -77,15 +77,10 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+	<h1 class="page-title">Module: DeviceController</h1>
 <section>
 
 <header>
-    
-        <h2>
-        
-        </h2>
-        
     
 </header>
 
@@ -93,6 +88,8 @@
 <article>
     <div class="container-overview">
     
+        
+            <div class="description"><p>기기에 대한 요청을 처리해주는 Controller.</p></div>
         
 
         
@@ -126,6 +123,11 @@
 
 
 	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/DeviceController.js
+	</dd>
+	
 
 	
 
@@ -144,35 +146,387 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-            <dt><a href="Device.html">Device</a></dt>
-            <dd></dd>
+            
+<hr>
+<dt>
+    <h4 class="name" id="~pushAll"><span class="type-signature">&lt;inner> </span>pushAll(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>변수:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)title: &quot;푸시 메세지 제목&quot;</li>
+   <li>(<span style="color:red;">필수</span>)message: &quot;푸시 메세지 내용&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
         
-            <dt><a href="Order.html">Order</a></dt>
-            <dd></dd>
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
         
-            <dt><a href="Photo.html">Photo</a></dt>
-            <dd></dd>
+        <th>Name</th>
         
-            <dt><a href="Product.html">Product</a></dt>
-            <dd></dd>
+
+        <th>Type</th>
+
         
-            <dt><a href="Review.html">Review</a></dt>
-            <dd></dd>
+
         
-            <dt><a href="User.html">User</a></dt>
-            <dd></dd>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/DeviceController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>푸시 메세지를 보낸다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="~register"><span class="type-signature">&lt;inner> </span>register(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>변수:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)deviceId: &quot;기기 아이디&quot;</li>
+   <li>(<span style="color:red;">필수</span>)platform: &quot;기기 플랫폼&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/DeviceController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>푸시 메세지를 보낸다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
         </dl>
-    
-
-    
-
-    
-
-    
-
     
 
     
