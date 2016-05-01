@@ -9,20 +9,105 @@
  *
  */
 
+/** @ignore */
+var validator = require('validator');
+var Promise = require('bluebird');
 
 /**
  * 주문에 대한 요청을 처리해주는 Controller.
  * @module OrderController
  */
 module.exports = {
+  find: find,
   checkout: checkout
 };
 
 
 /**
- * 
- *  주문을 저장한다 
- * 
+ *
+ * 주문 검색
+ *
+ *  변수:<br>
+ *  <ul>
+ *    <li>search: "사용자 아이디로 가지고 있는 주문을 검색 한다"</li>
+ *    <li>sort: "주문 검색 결과의 순서를 정한다"</li>
+ *    <li>limit: "주문 검색 결과의 양을 제한한다"</li>
+ *    <li>skip: "주어진 양만큼 주문 검색 결과의 첫부분을 넘기고 결과 값을 돌려준다"</li>
+ *    <li>populate: "주문과 연관있는 아이템을 같이 가져 온다"</li>
+ *  <ul>
+ *
+ * @param req {JSON}
+ * @param res {JSON}
+ * @return {JSON} 제시한 조건의 주문 리스트를 가져온다.
+ *
+ */
+
+function find(req, res) {
+  // 모든 변수를 하나의 Object로 가져온다
+  var params = req.allParams();
+
+  // Query를 만들기 준비
+  var query = {};
+
+  // 검색 변수 포함 확인
+  if (params.search)
+    query.where = {
+      owner: params.search
+    }
+
+  // sort 변수 포함 확인
+  if (params.sort)
+    query.sort = params.sort;
+
+
+  // 제한 data 수 포함 확인
+  if (params.limit && validator.isInt(params.limit, {min: 1, max: 100}))
+    query.limit = params.limit;
+  else
+    query.limit = 100;
+
+
+  // 넘길 data 수 포함 확인
+  if (params.skip && validator.isInt(params.skip))
+    query.skip = params.skip;
+
+  // create promise ref
+  var queryPromise = Order.find(query);
+
+  // association 결과 값 변수 포함 확인
+  if (params.populate) {
+    var populate = params.populate.split(',');
+    _.each(populate, function (propName) {
+      if (Order.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
+    });
+  }
+
+  // query의 총 갯수 promise 포함
+  var countPromise = Order.count(query);
+
+  // db query 실행 그리고 결과값 return
+  Promise.all([queryPromise, countPromise])
+    .spread(function (orders, count) {
+      // See if there's more
+      var more = (orders[query.limit - 1]) ? true : false;
+      // Remove item over 20 (only for check purpose)
+      if (more)orders.splice(query.limit - 1, 1);
+
+      res.ok({orders: orders, more: more, total: count});
+    })
+    .catch(function (err) {
+      sails.log.error(err);
+      res.send(500, {
+        message: "주문 읽기를 실패 했습니다."
+      });
+    });
+}
+
+/**
+ *
+ *  주문을 저장한다
+ *
  *  요청 body:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)order: "주문이름"</li>

@@ -50,8 +50,8 @@ module.exports.routes = {
    *               Order
    *************************************/
 
+  'GET /order/find': 'OrderController.find',
   'POST /order/checkout': 'OrderController.checkout',
-
 
   /**************************************
    *               Product
@@ -62,6 +62,14 @@ module.exports.routes = {
   'POST /product/create': 'ProductController.create',
   'PUT /product/update': 'ProductController.update',
   'DELETE /product/destroy': 'ProductController.destroy',
+
+
+  /**************************************
+   *               Photo
+   *************************************/
+
+  'POST /photo/create': 'PhotoController.create',
+  'DELETE /photo/destroy': 'PhotoController.destroy',
 
 
   /**************************************
@@ -88,15 +96,15 @@ module.exports.routes = {
    *               Auth
    *************************************/
 
-  'GET /user/checkEmail': 'AuthController.checkEmail',
-  'POST /user/login': 'AuthController.login',
-  'GET /user/logout': 'AuthController.logout',
-  'POST /user/register': 'AuthController.register',
+  'GET /checkEmail': 'AuthController.checkEmail',
+  'POST /login': 'AuthController.login',
+  'GET /logout': 'AuthController.logout',
+  'POST /register': 'AuthController.register',
 
   /**************************************
    *               Device
    *************************************/
-  
+
   'GET /device/push': 'DeviceController.pushAll',
   'POST /device/register': 'DeviceController.register',
 

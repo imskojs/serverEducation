@@ -46,8 +46,11 @@ function upload(req) {
   // 요청으로 들어온 모든 file 업로드를 받는다
   var allUpstreams = new Promise(function (resolve, reject) {
     req.file('file').upload(function (err, uploads) {
-      if (err)
-        return reject(err);
+      if (err || !uploads || uploads.length <= 0)
+        return reject(null);
+
+      sails.log(JSON.stringify(uploads));
+
       return resolve(uploads)
     })
   });
@@ -56,6 +59,8 @@ function upload(req) {
   return Promise.resolve(allUpstreams)
     .bind({})
     .then(function (imageInServer) {
+
+
       this.imageInServer = imageInServer[0];
       return cloudinary.uploader.upload(this.imageInServer.fd, null)
     })

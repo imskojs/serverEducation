@@ -12,6 +12,7 @@
 
 /** @ignore */
 var validator = require('validator');
+var Promise = require('bluebird');
 
 /**
  * 상품에 대한 요청을 처리해주는 Controller.
@@ -86,8 +87,8 @@ function find(req, res) {
   if (params.populate) {
     var populate = params.populate.split(',');
     _.each(populate, function (propName) {
-      if (Product.isAssociation(propName));
-      queryPromise = queryPromise.populate(propName);
+      if (Product.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
     });
   }
 
@@ -95,7 +96,7 @@ function find(req, res) {
   var countPromise = Product.count(query);
 
   // db query 실행 그리고 결과값 return
-  Promise.all([productPromise, countPromise])
+  Promise.all([queryPromise, countPromise])
     .spread(function (products, count) {
       // See if there's more
       var more = (products[query.limit - 1]) ? true : false;
@@ -144,19 +145,19 @@ function findOne(req, res) {
   };
 
   // create promise ref
-  var queryPromise = Product.find(query);
+  var queryPromise = Product.findOne(query);
 
   // association 결과 값 변수 포함 확인
   if (params.populate) {
     var populate = params.populate.split(',');
     _.each(populate, function (propName) {
-      if (Product.isAssociation(propName));
-      queryPromise = queryPromise.populate(propName);
+      if (Product.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
     });
   }
 
   // db query 실행 그리고 결과값 return
-  Promise.all([productPromise])
+  Promise.all([queryPromise])
     .spread(function (product) {
       res.ok(product);
     })
@@ -288,14 +289,14 @@ function update(req, res) {
 function destroy(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
-  var id = req.params.id;
+  var id = req.param("id");
 
   // 필수 변수가 있는지 확인
   if (!id)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
   // db query 실행 그리고 결과값 return
-  Product.destory({id: id})
+  Product.destroy({id: id})
     .then(function (products) {
       res.ok(products);
     })

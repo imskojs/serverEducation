@@ -9,6 +9,9 @@
  *
  */
 
+/** @ignore */
+var validator = require('validator');
+var Promise = require('bluebird');
 
 /**
  * 기기에 대한 요청을 처리해주는 Controller.
@@ -35,7 +38,7 @@ module.exports = {
  * @return {JSON} 푸시 메세지를 보낸다.
  *
  */
-function pushAll() {
+function pushAll(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
   var push = req.allParams();
@@ -46,7 +49,7 @@ function pushAll() {
 
   Device.find()
     .then(function (devices) {
-      PushService.sendAll(devices, title, message);
+      PushService.sendAll(devices, push.title, push.message);
       res.send(200, {
         message: "Message sent."
       });
@@ -75,7 +78,7 @@ function pushAll() {
  * @return {JSON} 기기를 푸시메세지에 등록 한다.
  *
  */
-function register() {
+function register(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
   var device = req.allParams();

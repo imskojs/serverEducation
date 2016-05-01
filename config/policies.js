@@ -26,19 +26,64 @@ module.exports.policies = {
    *                                                                          *
    ***************************************************************************/
 
-  // '*': [
-  //   'BearerAuth',
-  //   'SessionAuth'
-  // ],
+  '*': [
+    'BearerAuth',
+    'SessionAuth'
+  ],
 
-  '*': true
+  'AuthController': {
+    '*': [
+      'BearerAuth',
+      'SessionAuth'
+    ],
+    'checkEmail': true,
+    'login': true,
+    'register': true
+  },
 
-  /***************************************************************************
-   *                                                                          *
-   * Here's an example of mapping some policies to run before a controller    *
-   * and its actions                                                          *
-   *                                                                          *
-   ***************************************************************************/
+  'DeviceController': {
+    '*': false,
+    'pushAll': [
+      'BearerAuthAdmin',
+      'SessionAuth'
+    ],
+    'register': true
+  },
 
+  'PhotoController': [
+    'BearerAuthAdmin',
+    'SessionAuth'
+  ],
+
+  'ProductController': {
+    '*': [
+      'BearerAuthAdmin',
+      'SessionAuth'
+    ],
+    'find': [
+      'BearerAuth',
+      'SessionAuth'
+    ],
+    'findOne': [
+      'BearerAuth',
+      'SessionAuth'
+    ],
+  },
+
+  'UserController': [
+    'BearerAuthAdmin',
+    'SessionAuth'
+  ],
+
+  'OrderController': {
+    find: [
+      'BearerAuthAdmin',
+      'SessionAuth'
+    ],
+    checkout: [
+      'BearerAuth',
+      'SessionAuth'
+    ]
+  }
 
 };

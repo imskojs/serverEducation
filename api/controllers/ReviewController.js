@@ -11,13 +11,13 @@
 
 /** @ignore */
 var validator = require('validator');
+var Promise = require('bluebird');
 
 /**
  * 리뷰에 대한 요청을 처리해주는 Controller.
  * @module ReviewController
  */
 module.exports = {
-
   find: find,
   create: create,
   update: update,
@@ -30,7 +30,7 @@ module.exports = {
  *
  *  변수:<br>
  *  <ul>
- *    <li>product: "해당 리뷰의 리뷰를 가져온다"</li>
+ *    <li>review: "해당 리뷰의 리뷰를 가져온다"</li>
  *    <li>sort: "리뷰 검색 결과의 순서를 정한다"</li>
  *    <li>limit: "리뷰 검색 결과의 양을 제한한다"</li>
  *    <li>skip: "주어진 양만큼 리뷰 검색 결과의 첫부분을 넘기고 결과 값을 돌려준다"</li>
@@ -42,7 +42,7 @@ module.exports = {
  * @return {JSON} 제시한 조건의 리뷰 리스트를 가져온다.
  *
  */
-function find() {
+function find(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
   var params = req.allParams();
@@ -51,9 +51,9 @@ function find() {
   var query = {};
 
   // 검색 변수 포함 확인
-  if (params.product)
+  if (params.review)
     query.where = {
-      product: params.product
+      review: params.review
     }
 
 
@@ -80,8 +80,8 @@ function find() {
   if (params.populate) {
     var populate = params.populate.split(',');
     _.each(populate, function (propName) {
-      if (Review.isAssociation(propName));
-      queryPromise = queryPromise.populate(propName);
+      if (Review.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
     });
   }
 
@@ -89,14 +89,14 @@ function find() {
   var countPromise = Review.count(query);
 
   // db query 실행 그리고 결과값 return
-  Promise.all([productPromise, countPromise])
-    .spread(function (products, count) {
+  Promise.all([queryPromise, countPromise])
+    .spread(function (reviews, count) {
       // See if there's more
-      var more = (products[query.limit - 1]) ? true : false;
+      var more = (reviews[query.limit - 1]) ? true : false;
       // Remove item over 20 (only for check purpose)
-      if (more)products.splice(query.limit - 1, 1);
+      if (more)reviews.splice(query.limit - 1, 1);
 
-      res.ok({products: products, more: more, total: count});
+      res.ok({reviews: reviews, more: more, total: count});
     })
     .catch(function (err) {
       sails.log.error(err);
@@ -119,7 +119,7 @@ function find() {
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)content: "리뷰 내용"</li>
  *    <li>(<span style="color:red;">필수</span>)stars: "리뷰 별점"</li>
- *    <li>(<span style="color:red;">필수</span>)product: "리뷰 상품"</li>
+ *    <li>(<span style="color:red;">필수</span>)review: "리뷰 상품"</li>
  *  <ul>
  *
  * @param req {JSON}
@@ -127,13 +127,13 @@ function find() {
  * @return {JSON} 리뷰를 만들고 만들어진 리뷰를 받는다.
  *
  */
-function create() {
+function create(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
   var review = req.allParams();
 
   // 필수 변수가 있는지 확인
-  if (!review.content || !review.stars || !review.product)
+  if (!review.content || !review.stars || !review.review)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
 
@@ -174,10 +174,10 @@ function create() {
  * @return {JSON} 리뷰를 수정하고 수정된 리뷰를 받는다.
  *
  */
-function update() {
+function update(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
-  var review = req.allParams();
+  var review = req.body;
 
 
   // 필수 변수가 있는지 확인
@@ -195,8 +195,14 @@ function update() {
   // 필요없는 association 방지
   delete review.id;
 
-  // db query 실행 그리고 결과값 return
-  Review.update({id: id}, review)
+  Review.findOne({id: id, owner: req.user.id})
+    .then(function (foundReview) {
+      if (foundReview) {
+        review = _.extend(foundReview, review);
+        return Review.update({id: foundReview.id}, review);
+      }
+      else return null;
+    })
     .then(function (review) {
       res.ok(review);
     })
@@ -209,7 +215,7 @@ function update() {
 }
 
 /**
- * 
+ *
  *  리뷰를 지운다
  *
  *  변수:<br>
@@ -222,16 +228,16 @@ function update() {
  * @return {JSON} 제시한 아이디의 리뷰를 지우고 지워진 리뷰를 받는다.
  *
  */
-function destroy() {
+function destroy(req, res) {
   // 모든 변수를 하나의 Object로 가져온다
-  var id = req.params.id;
+  var id = req.param("id");
 
   // 필수 변수가 있는지 확인
   if (!id)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
   // db query 실행 그리고 결과값 return
-  Review.destory({id: id})
+  Review.destroy({id: id})
     .then(function (reviews) {
       res.ok(reviews);
     })

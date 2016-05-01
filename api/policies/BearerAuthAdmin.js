@@ -11,8 +11,8 @@
 
 
 /**
- * Token으로 사용자를 확인 하는 Policy
- * @service BearAuth
+ * Token으로 관리자를 확인 하는 Policy
+ * @service BearAuthAdmin
  */
 module.exports = function (req, res, next) {
 
@@ -40,13 +40,13 @@ module.exports = function (req, res, next) {
         return next();
       User.findOne({id: userInfo.id})
         .exec(function (err, user) {
-          if (!user) {
-            next();
-          } else {
-            //Role.find
+
+          if (user && user.role === "ADMIN") {
             req.token = token;
             req.user = user;
             req.session.authenticated = true;
+            next();
+          } else {
             next();
           }
         });

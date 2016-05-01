@@ -9,7 +9,11 @@
  *
  */
 
-module.exports = function(req, res, next) {
+/**
+ * 사용자 확인 여부를 확인 하는 Policy
+ * @service SessionAuth
+ */
+module.exports = function (req, res, next) {
 
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Shopping Server Module: ReviewController</title>
+	<title>Shopping Server Module: OrderController</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -77,7 +77,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: ReviewController</h1>
+	<h1 class="page-title">Module: OrderController</h1>
 <section>
 
 <header>
@@ -89,7 +89,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>리뷰에 대한 요청을 처리해주는 Controller.</p></div>
+            <div class="description"><p>주문에 대한 요청을 처리해주는 Controller.</p></div>
         
 
         
@@ -125,7 +125,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		controllers/ReviewController.js
+		controllers/OrderController.js
 	</dd>
 	
 
@@ -160,7 +160,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~create"><span class="type-signature">&lt;inner> </span>create(req, res)</h4>
+    <h4 class="name" id="~checkout"><span class="type-signature">&lt;inner> </span>checkout(req, res)</h4>
     
     
 </dt>
@@ -168,18 +168,10 @@
 
     
     <div class="description">
-        <p>특정 상품에 리뷰를 작성한다</p>
-<p> TODO: need logic implementation
- 아래 조건이 성립되어야 작성가능</p>
-<ol>
-<li>이미 리뷰를 작성 하지 않음
-(시간이 남을때) 2. 리뷰를 작성 하려는 상품에 주문내역이 있어야함</li>
-</ol>
-<p>요청 body:<br>
+        <p>주문을 저장한다 </p>
+<p> 요청 body:<br>
  <ul>
-   <li>(<span style="color:red;">필수</span>)content: &quot;리뷰 내용&quot;</li>
-   <li>(<span style="color:red;">필수</span>)stars: &quot;리뷰 별점&quot;</li>
-   <li>(<span style="color:red;">필수</span>)product: &quot;리뷰 상품&quot;</li>
+   <li>(<span style="color:red;">필수</span>)order: &quot;주문이름&quot;</li>
  <ul></p>
     </div>
     
@@ -298,7 +290,7 @@
 	
 	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
 	<dd class="tag-source">
-		controllers/ReviewController.js
+		controllers/OrderController.js
 	</dd>
 	
 
@@ -325,571 +317,7 @@
     
             
 <div class="param-desc">
-    <p>리뷰를 만들고 만들어진 리뷰를 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>리뷰를 지운다</p>
-<p> 변수:<br>
- <ul>
-   <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 리뷰를 지운다&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/ReviewController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>제시한 아이디의 리뷰를 지우고 지워진 리뷰를 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="~find"><span class="type-signature">&lt;inner> </span>find(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>특정상품에 리뷰를 검색한다</p>
-<p> 변수:<br>
- <ul>
-   <li>product: &quot;해당 리뷰의 리뷰를 가져온다&quot;</li>
-   <li>sort: &quot;리뷰 검색 결과의 순서를 정한다&quot;</li>
-   <li>limit: &quot;리뷰 검색 결과의 양을 제한한다&quot;</li>
-   <li>skip: &quot;주어진 양만큼 리뷰 검색 결과의 첫부분을 넘기고 결과 값을 돌려준다&quot;</li>
-   <li>populate: &quot;리뷰과 연관있는 아이템을 같이 가져 온다&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/ReviewController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>제시한 조건의 리뷰 리스트를 가져온다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="~update"><span class="type-signature">&lt;inner> </span>update(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>리뷰를 수정한다</p>
-<p> TODO: need logic implementation
- 아래 조건이 성립되어야 작성가능</p>
-<ol>
-<li><p>리뷰의 주인만 수정 가능</p>
-<p>요청 body:<br>
-<ul>
-<li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 리뷰를 수정한다&quot;</li></p>
-<ul></li>
-</ol>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/ReviewController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>리뷰를 수정하고 수정된 리뷰를 받는다.</p>
+    <p>주문을 만들고 만들어진 주문을 받는다.</p>
 </div>
 
 

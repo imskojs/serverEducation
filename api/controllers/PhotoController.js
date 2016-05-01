@@ -33,7 +33,7 @@ module.exports = {
  * @return {JSON} 사진을 만들고 만들어진 사진을 받는다.
  *
  */
-function create() {
+function create(req, res) {
   PhotoService.upload(req)
     .then(function (file) {
       // 저장한 사진을 돌려준다.
@@ -59,9 +59,9 @@ function create() {
  * @return {JSON} 제시한 아이디의 사진을 지우고 지워진 사진을 받는다.
  *
  */
-function destroy() {
+function destroy(req, res) {
   // 모든 변수를 하나의 Object로 가져온다
-  var id = req.params.id;
+  var id = req.param('id');
 
   // 필수 변수가 있는지 확인
   if (!id)

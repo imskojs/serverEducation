@@ -33,7 +33,7 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-DeviceController.html">DeviceController</a></li><li><a href="module-ProductController.html">ProductController</a></li><li><a href="module-ReviewController.html">ReviewController</a></li><li><a href="module-UserController.html">UserController</a></li>
+					<li><a href="module-DeviceController.html">DeviceController</a></li><li><a href="module-OrderController.html">OrderController</a></li><li><a href="module-ProductController.html">ProductController</a></li><li><a href="module-ReviewController.html">ReviewController</a></li><li><a href="module-UserController.html">UserController</a></li>
 				</ul>
 			</li>
 			
@@ -47,7 +47,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#init">init</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#upload">upload</a></li>
+					<li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#upload">upload</a></li>
 				</ul>
 			</li>
 			
@@ -168,7 +168,193 @@
 
     
     <div class="description">
-        <p>요청 body:<br>
+        <p>사진을 업로드 한다</p>
+<p> 요청 body:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)file: &quot;사진 file stream&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/PhotoController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>사진을 만들고 만들어진 사진을 받는다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="~create"><span class="type-signature">&lt;inner> </span>create(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>사용자를 만든다</p>
+<p> 요청 body:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)email: &quot;사용자 이메일&quot;</li>
    <li>(<span style="color:red;">필수</span>)password: &quot;사용자 비밀번호&quot;</li>
@@ -345,190 +531,6 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~create"><span class="type-signature">&lt;inner> </span>create(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>요청 body:<br>
- <ul>
-   <li>(<span style="color:red;">필수</span>)file: &quot;사진 file stream&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/PhotoController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>사진을 만들고 만들어진 사진을 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
     
     
@@ -537,191 +539,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
- <ul>
-   <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 지운다&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/UserController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>제시한 아이디의 사용자를 지우고 지워진 사용자를 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>변수:<br>
+        <p>사진을 지운다</p>
+<p> 변수:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사진을 지운다&quot;</li>
  <ul></p>
@@ -897,6 +716,191 @@
             
 <hr>
 <dt>
+    <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>사용자를 지운다</p>
+<p> 변수:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 지운다&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/UserController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>제시한 아이디의 사용자를 지우고 지워진 사용자를 받는다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="~find"><span class="type-signature">&lt;inner> </span>find(req, res)</h4>
     
     
@@ -905,7 +909,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
+        <p>사용자를 검색한다</p>
+<p> 변수: <br>
  <ul>
    <li>email: &quot;이 키워드를 이름으로 가지고 있는 사용자를 검색 한다&quot;</li>
    <li>sort: &quot;사용자 검색 결과의 순서를 정한다&quot;</li>
@@ -1093,7 +1098,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
+        <p>특정 사용자의 상세 정보를 가져온다</p>
+<p> 변수:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 가져온다&quot;</li>
    <li>populate: &quot;사용자과 연관있는 아이템을 같이 가져 온다&quot;</li>
@@ -1278,7 +1284,8 @@
 
     
     <div class="description">
-        <p>요청 body:<br>
+        <p>사용자를 수정한다</p>
+<p> 요청 body:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 수정한다&quot;</li>
  <ul></p>
@@ -1554,7 +1561,193 @@
 
     
     <div class="description">
-        <p>요청 body:<br>
+        <p>사진을 업로드 한다</p>
+<p> 요청 body:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)file: &quot;사진 file stream&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/PhotoController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>사진을 만들고 만들어진 사진을 받는다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="~create"><span class="type-signature">&lt;inner> </span>create(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>사용자를 만든다</p>
+<p> 요청 body:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)email: &quot;사용자 이메일&quot;</li>
    <li>(<span style="color:red;">필수</span>)password: &quot;사용자 비밀번호&quot;</li>
@@ -1731,190 +1924,6 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~create"><span class="type-signature">&lt;inner> </span>create(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>요청 body:<br>
- <ul>
-   <li>(<span style="color:red;">필수</span>)file: &quot;사진 file stream&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/PhotoController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>사진을 만들고 만들어진 사진을 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
     
     
@@ -1923,191 +1932,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
- <ul>
-   <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 지운다&quot;</li>
- <ul></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">JSON</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		controllers/UserController.js
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>제시한 아이디의 사용자를 지우고 지워진 사용자를 받는다.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">JSON</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>변수:<br>
+        <p>사진을 지운다</p>
+<p> 변수:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사진을 지운다&quot;</li>
  <ul></p>
@@ -2283,6 +2109,191 @@
             
 <hr>
 <dt>
+    <h4 class="name" id="~destroy"><span class="type-signature">&lt;inner> </span>destroy(req, res)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>사용자를 지운다</p>
+<p> 변수:<br>
+ <ul>
+   <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 지운다&quot;</li>
+ <ul></p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		controllers/UserController.js
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>제시한 아이디의 사용자를 지우고 지워진 사용자를 받는다.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="~find"><span class="type-signature">&lt;inner> </span>find(req, res)</h4>
     
     
@@ -2291,7 +2302,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
+        <p>사용자를 검색한다</p>
+<p> 변수: <br>
  <ul>
    <li>email: &quot;이 키워드를 이름으로 가지고 있는 사용자를 검색 한다&quot;</li>
    <li>sort: &quot;사용자 검색 결과의 순서를 정한다&quot;</li>
@@ -2479,7 +2491,8 @@
 
     
     <div class="description">
-        <p>변수:<br>
+        <p>특정 사용자의 상세 정보를 가져온다</p>
+<p> 변수:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 가져온다&quot;</li>
    <li>populate: &quot;사용자과 연관있는 아이템을 같이 가져 온다&quot;</li>
@@ -2664,7 +2677,8 @@
 
     
     <div class="description">
-        <p>요청 body:<br>
+        <p>사용자를 수정한다</p>
+<p> 요청 body:<br>
  <ul>
    <li>(<span style="color:red;">필수</span>)id: &quot;제시한 아이디의 사용자를 수정한다&quot;</li>
  <ul></p>
@@ -2890,7 +2904,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on 2016/04/Su
+		on 2016/04/Fr
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

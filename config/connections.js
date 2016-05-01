@@ -19,6 +19,10 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
 
+
+/** @ignore */
+var gcm = require('push-notify');
+
 module.exports.connections = {
 
   /***************************************************************************
@@ -36,6 +40,29 @@ module.exports.connections = {
     // user: 'username',
     // password: 'password',
     database: 'shopping'
+  },
+
+
+  /**
+   *  Image Server Config (Cloudinary)
+   */
+  cloudinary: {
+    cloud_name: 'applicatworkshop',
+    api_key: '646323879887636',
+    api_secret: 'B-ROp8wTI_U5QvJmaQWOvuZ9H6E',
+    tags: []
+  },
+
+  /**
+   *  Push Message Config
+   */
+  gcm: gcm.gcm({
+    apiKey: 'AIzaSyC_VqSFmRXD7TxrXKPMIyQ8HI4vQYJ5FR4'
+  }),
+
+  apnConfig: {
+    "cert": __dirname + '/ssl/cert.pem',
+    "key": __dirname + '/ssl/key.pem'
   },
 
 };

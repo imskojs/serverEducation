@@ -48,6 +48,7 @@ module.exports = {
 
     email: {type: 'email', unique: true, index: true},
     password: {type: 'string', minLength: 8},
+    role: {type: 'string', defaultsTo: "USER"},
 
     /** Associations */
     profilePhoto: {model: 'photo'},
@@ -56,14 +57,33 @@ module.exports = {
     devices: {collection: 'Device', via: 'owner'},
     owner: {model: 'User'},
     createdBy: {model: 'User'},
-    updatedBy: {model: 'User'}
+    updatedBy: {model: 'User'},
+    validatePassword: function (password) {
+
+      var obj = this.toObject();
+
+      return new Promise(function (resolve, reject) {
+        bcrypt.compare(password, obj.password, function (err, res) {
+          if (err) {
+            return reject(err);
+          }
+
+          if (!res) {
+            reject({'error': '비밀번호가 들렷습니다.'});
+          } else {
+            resolve(null, true);
+          }
+        });
+      });
+    },
+    toJSON: function () {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
+    },
   },
   // Override the default toJSON method
-  toJSON: function () {
-    var obj = this.toObject();
-    delete obj.password;
-    return obj;
-  },
+
   isAssociation: function (propName) {
     return validator.isIn(propName, associations);
   },
@@ -73,21 +93,7 @@ module.exports = {
   beforeUpdate: function (user, next) {
     hashPassword(user, next);
   },
-  validatePassword: function (password) {
-    return new Promise(function (resolve, reject) {
-      bcrypt.compare(password, this.password, function (err, res) {
-        if (err) {
-          return reject(err);
-        }
 
-        if (!res) {
-          reject({'error': '비밀번호가 들렷습니다.'});
-        } else {
-          resolve(null, true);
-        }
-      });
-    });
-  }
 };
 
 function hashPassword(user, next) {

@@ -12,11 +12,15 @@
 module.exports.users = {
 
   initialUser: [
-      {
-        email: 'user@naver.co.kr',
-        username: 'user',
-        nickname: '사용자',
-        password: 'user1234'
-      }
-    ]
+    {
+      email: 'admin@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
+      email: 'user@naver.co.kr',
+      password: '22223333'
+    }
+  ]
+
 };

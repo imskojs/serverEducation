@@ -9,6 +9,10 @@
  *
  */
 
+/**
+ * 재사용 가능한 서버 쿼리 서비스
+ * @service QueryService
+ */
 module.exports = {
   applyPopulate: applyPopulate,
 };
@@ -17,7 +21,13 @@ module.exports = {
  *                      Public Methods
  ********************************************************/
 
-
+/**
+ *
+ * 약속에 populate task를 더 해준다.
+ *
+ * @param queryPromise task가 더 해질 약속
+ * @param populate 더 할 populate task의 이름들
+ */
 function applyPopulate(queryPromise, populate) {
   if (!populate)
     return;

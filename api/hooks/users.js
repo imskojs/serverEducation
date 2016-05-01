@@ -26,7 +26,7 @@ module.exports = function (sails) {
 
       sails.after('hook:orm:loaded', function () {
         return injectUser()
-          .then(function () {
+          .then(function (users) {
             next();
           })
           .catch(function (error) {
@@ -41,17 +41,25 @@ module.exports = function (sails) {
 
 function injectUser() {
   sails.log('UsersHook : injecting users');
-  var userToCreate = sails.config.users.initialUser;
 
-  return new Promise(function (resolve, reject) {
-    User.create(userToCreate)
-      .then(function (users) {
-        resolve(users);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
+  var promises = [];
+
+
+  _.each(sails.config.users.initialUser, function(userToCreate){
+    promises.push(new Promise(function (resolve, reject) {
+      User.findOrCreate({email: userToCreate.email}, userToCreate)
+        .then(function (users) {
+          resolve(users);
+        })
+        .catch(function (err) {
+          reject(err);
+        });
+    }));
   });
+  
+ 
+
+  return Promise.all(promises);
 }
 
 

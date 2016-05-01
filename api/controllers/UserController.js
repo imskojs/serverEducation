@@ -12,6 +12,7 @@
 
 /** @ignore */
 var validator = require('validator');
+var Promise = require('bluebird');
 
 /**
  * 사용자에 대한 요청을 처리해주는 Controller.
@@ -26,9 +27,9 @@ module.exports = {
 };
 
 /**
- * 
+ *
  *  사용자를 검색한다
- * 
+ *
  *  변수: <br>
  *  <ul>
  *    <li>email: "이 키워드를 이름으로 가지고 있는 사용자를 검색 한다"</li>
@@ -43,7 +44,7 @@ module.exports = {
  * @return {JSON} 제시한 조건의 사용자 리스트를 가져온다.
  *
  */
-function find() {
+function find(req, res) {
   // 모든 변수를 하나의 Object로 가져온다
   var params = req.allParams();
 
@@ -81,8 +82,8 @@ function find() {
   if (params.populate) {
     var populate = params.populate.split(',');
     _.each(populate, function (propName) {
-      if (User.isAssociation(propName));
-      queryPromise = queryPromise.populate(propName);
+      if (User.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
     });
   }
 
@@ -90,14 +91,14 @@ function find() {
   var countPromise = User.count(query);
 
   // db query 실행 그리고 결과값 return
-  Promise.all([productPromise, countPromise])
-    .spread(function (products, count) {
+  Promise.all([queryPromise, countPromise])
+    .spread(function (users, count) {
       // See if there's more
-      var more = (products[query.limit - 1]) ? true : false;
+      var more = (users[query.limit - 1]) ? true : false;
       // Remove item over 20 (only for check purpose)
-      if (more)products.splice(query.limit - 1, 1);
+      if (more)users.splice(query.limit - 1, 1);
 
-      res.ok({products: products, more: more, total: count});
+      res.ok({users: users, more: more, total: count});
     })
     .catch(function (err) {
       sails.log.error(err);
@@ -108,9 +109,9 @@ function find() {
 }
 
 /**
- * 
+ *
  *  특정 사용자의 상세 정보를 가져온다
- * 
+ *
  *  변수:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 사용자를 가져온다"</li>
@@ -140,21 +141,21 @@ function findOne(req, res) {
   };
 
   // create promise ref
-  var queryPromise = User.find(query);
+  var queryPromise = User.findOne(query);
 
   // association 결과 값 변수 포함 확인
   if (params.populate) {
     var populate = params.populate.split(',');
     _.each(populate, function (propName) {
-      if (User.isAssociation(propName));
-      queryPromise = queryPromise.populate(propName);
+      if (User.isAssociation(propName))
+        queryPromise = queryPromise.populate(propName);
     });
   }
 
   // db query 실행 그리고 결과값 return
-  Promise.all([productPromise])
-    .spread(function (product) {
-      res.ok(product);
+  Promise.all([queryPromise])
+    .spread(function (user) {
+      res.ok(user);
     })
     .catch(function (err) {
       sails.log.error(err);
@@ -165,9 +166,9 @@ function findOne(req, res) {
 }
 
 /**
- * 
- *  사용자를 만든다 
- * 
+ *
+ *  사용자를 만든다
+ *
  *  요청 body:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)email: "사용자 이메일"</li>
@@ -198,10 +199,18 @@ function create(req, res) {
   delete user.orders;
   delete user.reviews;
 
-  // db query 실행 그리고 결과값 return
-  User.create(user)
+  User.findOne({email: user.email})
     .then(function (user) {
-      res.ok(user);
+      if (!user)
+        return User.create(user);
+      else
+        return null;
+    })
+    .then(function (user) {
+      if (user)
+        res.ok(user);
+      else
+        res.send(400, {message: "이미 동일한 이메일을 사용하는 사용자가 존재합니다."});
     })
     .catch(function (err) {
       sails.log.error(err);
@@ -212,9 +221,9 @@ function create(req, res) {
 }
 
 /**
- * 
- *  사용자를 수정한다 
- * 
+ *
+ *  사용자를 수정한다
+ *
  *  요청 body:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 사용자를 수정한다"</li>
@@ -247,6 +256,7 @@ function update(req, res) {
   delete user.id;
   delete user.orders;
   delete user.reviews;
+  delete user.role;
 
   // db query 실행 그리고 결과값 return
   User.update({id: id}, user)
@@ -262,9 +272,9 @@ function update(req, res) {
 }
 
 /**
- * 
- *  사용자를 지운다 
- * 
+ *
+ *  사용자를 지운다
+ *
  *  변수:<br>
  *  <ul>
  *    <li>(<span style="color:red;">필수</span>)id: "제시한 아이디의 사용자를 지운다"</li>
@@ -278,14 +288,14 @@ function update(req, res) {
 function destroy(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
-  var id = req.params.id;
+  var id = req.param("id");
 
   // 필수 변수가 있는지 확인
   if (!id)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
   // db query 실행 그리고 결과값 return
-  User.destory({id: id})
+  User.destroy({id: id})
     .then(function (users) {
       res.ok(users);
     })
