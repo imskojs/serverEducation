@@ -200,8 +200,8 @@ function create(req, res) {
   delete user.reviews;
 
   User.findOne({email: user.email})
-    .then(function (user) {
-      if (!user)
+    .then(function (foundUser) {
+      if (!foundUser)
         return User.create(user);
       else
         return null;
