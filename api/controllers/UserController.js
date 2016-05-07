@@ -52,10 +52,10 @@ function find(req, res) {
   var query = {};
 
   // 검색 변수 포함 확인
-  if (params.search)
+  if (params.email)
     query.where = {
       email: {
-        contains: params.search
+        contains: params.email
       }
     }
 
@@ -65,15 +65,18 @@ function find(req, res) {
 
 
   // 제한 data 수 포함 확인
-  if (params.limit && validator.isInt(params.limit, {min: 1, max: 100}))
-    query.limit = params.limit;
-  else
-    query.limit = 100;
+  var limit = parseInt(params.limit, 10);
+  if (limit) {
+    query.limit = limit + 1; // 실질적으로는 10이면 11개를 가져와 11개째가 있으면 더 10보다 상품이 더 많다고 표현함
+  } else
+    query.limit = 100 + 1;  // 사실상 100개 이상 가지고 올 이유가 없기 때문에 100이상은 100개로 고정
 
 
-  // 넘길 data 수 포함 확인
-  if (params.skip && validator.isInt(params.skip))
-    query.skip = params.skip;
+  // 넘길 data 수 포함 확인 (10: 10개를 넘기고 그다음 10개부터
+  // 가져온다 페이지 하나당 10개를 보여주는 UI이라면 페이지 번호 * 10 해서 넘기면 간단하게 pagination이 가능)
+  var skip = parseInt(params.skip, 10);
+  if (skip)
+    query.skip = skip;
 
   // create promise ref
   var queryPromise = User.find(query);
@@ -88,15 +91,17 @@ function find(req, res) {
   }
 
   // query의 총 갯수 promise 포함
+  delete query.limit;
+  delete query.skip;
   var countPromise = User.count(query);
 
   // db query 실행 그리고 결과값 return
   Promise.all([queryPromise, countPromise])
     .spread(function (users, count) {
       // See if there's more
-      var more = (users[query.limit - 1]) ? true : false;
+      var more = (users[limit - 1]) ? true : false;
       // Remove item over 20 (only for check purpose)
-      if (more)users.splice(query.limit - 1, 1);
+      if (more)users.splice(limit - 1, 1);
 
       res.ok({users: users, more: more, total: count});
     })

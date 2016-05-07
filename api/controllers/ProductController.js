@@ -299,9 +299,9 @@ function create(req, res) {
   // 관리자로 로그인 되어 있을시에만 가능하게 만든다
   // 그렇기 때문에 입증후 req.user 에 사용자의 대한 정보가 담겨 져있게 된다.
   //  보안 적용 후 다시 uncomment 하면 되는 부분이라고 보면 된다.
-  // product.owner = req.user.id;
-  // product.createdBy = req.user.id;
-  // product.updatedBy = req.user.id;
+  product.owner = req.user.id;
+  product.createdBy = req.user.id;
+  product.updatedBy = req.user.id;
 
   // 필요없는 association 방지 review부분을 상품 만들때 같이 만들수 있다.
   // 하지만 그러면 Rest API  Rule에 하나의 함수가 상품도 만들고 리뷰도 만들어 버리기 때문에
@@ -364,9 +364,9 @@ function update(req, res) {
   // 관리자로 로그인 되어 있을시에만 가능하게 만든다
   // 그렇기 때문에 입증후 req.user 에 사용자의 대한 정보가 담겨 져있게 된다.
   //  보안 적용 후 다시 uncomment 하면 되는 부분이라고 보면 된다.
-  // product.owner = req.user.id;
-  // product.createdBy = req.user.id;
-  // product.updatedBy = req.user.id;
+  product.owner = req.user.id;
+  product.createdBy = req.user.id;
+  product.updatedBy = req.user.id;
 
   // 필요없는 association 방지 review부분을 상품 만들때 같이 만들수 있다.
   // 하지만 그러면 Rest API  Rule에 하나의 함수가 상품도 만들고 리뷰도 만들어 버리기 때문에

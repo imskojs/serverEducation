@@ -142,9 +142,9 @@ function create(req, res) {
 
 
   // history record 남기기
-  // review.owner = req.user.id;
-  // review.createdBy = req.user.id;
-  // review.updatedBy = req.user.id;
+  review.owner = req.user.id;
+  review.createdBy = req.user.id;
+  review.updatedBy = req.user.id;
 
   // db query 실행 그리고 결과값 return
   Review.create(review)
@@ -192,9 +192,9 @@ function update(req, res) {
 
   // history record 남기기
 
-  // review.owner = req.user.id;
-  // review.createdBy = req.user.id;
-  // review.updatedBy = req.user.id;
+  review.owner = req.user.id;
+  review.createdBy = req.user.id;
+  review.updatedBy = req.user.id;
 
   // 필요없는 association 방지
   delete review.id;

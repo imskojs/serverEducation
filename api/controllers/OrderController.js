@@ -131,9 +131,9 @@ function checkout(req, res) {
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
   // history record 남기기
-  // order.owner = req.user.id;
-  // order.createdBy = req.user.id;
-  // order.updatedBy = req.user.id;
+  order.owner = req.user.id;
+  order.createdBy = req.user.id;
+  order.updatedBy = req.user.id;
 
   // db query 실행 그리고 결과값 return
   Order.create(order)
