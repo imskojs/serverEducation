@@ -18,7 +18,52 @@ module.exports.users = {
       role: 'ADMIN'
     },
     {
+      email: 'admin1@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
+      email: 'admin2@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
+      email: 'admin3@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
+      email: 'admin4@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
+      email: 'admin5@naver.co.kr',
+      password: '11112222',
+      role: 'ADMIN'
+    },
+    {
       email: 'user@naver.co.kr',
+      password: '22223333'
+    },
+    {
+      email: 'user1@naver.co.kr',
+      password: '22223333'
+    },
+    {
+      email: 'user2@naver.co.kr',
+      password: '22223333'
+    },
+    {
+      email: 'user3@naver.co.kr',
+      password: '22223333'
+    },
+    {
+      email: 'user4@naver.co.kr',
+      password: '22223333'
+    },
+    {
+      email: 'user5@naver.co.kr',
       password: '22223333'
     }
   ]

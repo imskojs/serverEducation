@@ -50,9 +50,9 @@ function find(req, res) {
   var query = {};
 
   // 검색 변수 포함 확인
-  if (params.search)
+  if (params.owner)
     query.where = {
-      owner: params.search
+      owner: params.owner
     }
 
   // sort 변수 포함 확인
@@ -60,16 +60,18 @@ function find(req, res) {
     query.sort = params.sort;
 
 
-  // 제한 data 수 포함 확인
-  if (params.limit && validator.isInt(params.limit, {min: 1, max: 100}))
-    query.limit = params.limit;
-  else
-    query.limit = 100;
+  var limit = parseInt(params.limit, 10);
+  if (limit) {
+    query.limit = limit + 1; // 실질적으로는 10이면 11개를 가져와 11개째가 있으면 더 10보다 상품이 더 많다고 표현함
+  } else
+    query.limit = 100 + 1;  // 사실상 100개 이상 가지고 올 이유가 없기 때문에 100이상은 100개로 고정
 
+  // 넘길 data 수 포함 확인 (10: 10개를 넘기고 그다음 10개부터
+  // 가져온다 페이지 하나당 10개를 보여주는 UI이라면 페이지 번호 * 10 해서 넘기면 간단하게 pagination이 가능)
+  var skip = parseInt(params.skip, 10);
+  if (skip)
+    query.skip = skip;
 
-  // 넘길 data 수 포함 확인
-  if (params.skip && validator.isInt(params.skip))
-    query.skip = params.skip;
 
   // create promise ref
   var queryPromise = Order.find(query);
@@ -84,15 +86,17 @@ function find(req, res) {
   }
 
   // query의 총 갯수 promise 포함
+  delete query.limit;
+  delete query.skip;
   var countPromise = Order.count(query);
 
   // db query 실행 그리고 결과값 return
   Promise.all([queryPromise, countPromise])
     .spread(function (orders, count) {
       // See if there's more
-      var more = (orders[query.limit - 1]) ? true : false;
+      var more = (orders[limit - 1]) ? true : false;
       // Remove item over 20 (only for check purpose)
-      if (more)orders.splice(query.limit - 1, 1);
+      if (more)orders.splice(limit - 1, 1);
 
       res.ok({orders: orders, more: more, total: count});
     })
@@ -127,9 +131,9 @@ function checkout(req, res) {
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
   // history record 남기기
-  order.owner = req.user.id;
-  order.createdBy = req.user.id;
-  order.updatedBy = req.user.id;
+  // order.owner = req.user.id;
+  // order.createdBy = req.user.id;
+  // order.updatedBy = req.user.id;
 
   // db query 실행 그리고 결과값 return
   Order.create(order)

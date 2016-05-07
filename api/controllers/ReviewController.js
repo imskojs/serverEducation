@@ -51,9 +51,9 @@ function find(req, res) {
   var query = {};
 
   // 검색 변수 포함 확인
-  if (params.review)
+  if (params.product)
     query.where = {
-      review: params.review
+      product: params.product
     }
 
 
@@ -63,15 +63,17 @@ function find(req, res) {
 
 
   // 제한 data 수 포함 확인
-  if (params.limit && validator.isInt(params.limit, {min: 1, max: 100}))
-    query.limit = params.limit;
-  else
-    query.limit = 100;
+  var limit = parseInt(params.limit, 10);
+  if (limit) {
+    query.limit = limit + 1;
+  } else
+    query.limit = 100 + 1;
 
 
   // 넘길 data 수 포함 확인
-  if (params.skip && validator.isInt(params.skip))
-    query.skip = params.skip;
+  var skip = parseInt(params.skip, 10);
+  if (skip)
+    query.skip = skip;
 
   // create promise ref
   var queryPromise = Review.find(query);
@@ -86,15 +88,17 @@ function find(req, res) {
   }
 
   // query의 총 갯수 promise 포함
+  delete query.limit;
+  delete query.skip;
   var countPromise = Review.count(query);
 
   // db query 실행 그리고 결과값 return
   Promise.all([queryPromise, countPromise])
     .spread(function (reviews, count) {
       // See if there's more
-      var more = (reviews[query.limit - 1]) ? true : false;
+      var more = (reviews[limit - 1]) ? true : false;
       // Remove item over 20 (only for check purpose)
-      if (more)reviews.splice(query.limit - 1, 1);
+      if (more)reviews.splice(limit - 1, 1);
 
       res.ok({reviews: reviews, more: more, total: count});
     })
@@ -133,14 +137,14 @@ function create(req, res) {
   var review = req.allParams();
 
   // 필수 변수가 있는지 확인
-  if (!review.content || !review.stars || !review.review)
+  if (!review.content || !review.stars || !review.product)
     return res.send(400, {message: "모든 변수를 입력해주세요."});
 
 
   // history record 남기기
-  review.owner = req.user.id;
-  review.createdBy = req.user.id;
-  review.updatedBy = req.user.id;
+  // review.owner = req.user.id;
+  // review.createdBy = req.user.id;
+  // review.updatedBy = req.user.id;
 
   // db query 실행 그리고 결과값 return
   Review.create(review)
@@ -177,7 +181,7 @@ function create(req, res) {
 function update(req, res) {
 
   // 모든 변수를 하나의 Object로 가져온다
-  var review = req.body;
+  var review = req.allParams();
 
 
   // 필수 변수가 있는지 확인
@@ -188,12 +192,13 @@ function update(req, res) {
 
   // history record 남기기
 
-  review.owner = req.user.id;
-  review.createdBy = req.user.id;
-  review.updatedBy = req.user.id;
+  // review.owner = req.user.id;
+  // review.createdBy = req.user.id;
+  // review.updatedBy = req.user.id;
 
   // 필요없는 association 방지
   delete review.id;
+  delete review.product;
 
   Review.findOne({id: id, owner: req.user.id})
     .then(function (foundReview) {
@@ -204,7 +209,10 @@ function update(req, res) {
       else return null;
     })
     .then(function (review) {
-      res.ok(review);
+      if (review)
+        res.ok(review);
+      else
+        res.forbidden('You are not permitted to perform this action.');
     })
     .catch(function (err) {
       sails.log.error(err);
