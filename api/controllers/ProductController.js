@@ -118,7 +118,9 @@ function find(req, res) {
 
   // 상품을 찾아오는 약속을 Product.find라는 기본적인 sails model.find 함수에서 받아온다.
   // 약속들은은 밑에 Promise.all이라는 함수에서 실행하여 모든 약속이 실행 됐을때 한번에 관리한다.
-  var queryPromise = Product.find(query).populate('photo');
+  var queryPromise = Product.find(query)
+    .populate('photo')
+    .populate('owner');
 
   // association 결과 값 변수 포함 확인 ('photos,owner') ','를 사용해 어떤 연관된 모델을 가져올지 정의 한다
   // e.g. 'photos,owner' = 같은 경우 상품을 가져올때 'photos' = 상품에 사진도 같이 가져 온다, 'owner' = '상품에 주인도 가져온다'
