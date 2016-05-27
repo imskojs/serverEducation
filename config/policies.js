@@ -56,7 +56,8 @@ module.exports.policies = {
 
   'ProductController': {
     '*': [
-      'BearerAuthAdmin',
+      'BearerAuth',
+      // 'BearerAuthAdmin',
       'SessionAuth'
     ],
     'find': [

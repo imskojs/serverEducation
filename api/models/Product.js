@@ -47,20 +47,20 @@ module.exports = {
   attributes: {
 
     /** Properties */
-    name: {type: 'String', required: true},
-    description: {type: 'String', required: true},
-    price: {type: 'Integer',},
-    salePrice: {type: 'Integer',},
+    name: { type: 'String', required: true },
+    description: { type: 'String', required: true },
+    price: { type: 'Integer', },
+    salePrice: { type: 'Integer', },
 
     /** Associations */
-    photos: {collection: 'Photo', via: 'product'},
-    reviews: {collection: 'Review', via: 'product'},
-    owner: {model: 'User'},
-    createdBy: {model: 'User'},
-    updatedBy: {model: 'User'}
+    photo: { model: 'Photo' },
+    // photos: { collection: 'Photo', via: 'product' },
+    reviews: { collection: 'Review', via: 'product' },
+    owner: { model: 'User' },
+    createdBy: { model: 'User' },
+    updatedBy: { model: 'User' }
   },
-  isAssociation: function (propName) {
+  isAssociation: function(propName) {
     return validator.isIn(propName, associations);
   }
 };
-
