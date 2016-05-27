@@ -26,13 +26,13 @@ var gcm = require('push-notify');
 module.exports.connections = {
 
   /***************************************************************************
-  *                                                                          *
-  * MongoDB is the leading NoSQL database.                                   *
-  * http://en.wikipedia.org/wiki/MongoDB                                     *
-  *                                                                          *
-  * Run: npm install sails-mongo                                             *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * MongoDB is the leading NoSQL database.                                   *
+   * http://en.wikipedia.org/wiki/MongoDB                                     *
+   *                                                                          *
+   * Run: npm install sails-mongo                                             *
+   *                                                                          *
+   ***************************************************************************/
   someMongodbServer: {
     adapter: 'sails-mongo',
     host: 'localhost',
@@ -47,10 +47,15 @@ module.exports.connections = {
    *  Image Server Config (Cloudinary)
    */
   cloudinary: {
-    cloud_name: 'applicatworkshop',
-    api_key: '646323879887636',
-    api_secret: 'B-ROp8wTI_U5QvJmaQWOvuZ9H6E',
-    tags: []
+    cloud_name: 'appdev',
+    api_key: '355231636137138',
+    api_secret: 'p_5ViDMlrlNZJFUP91trdUmo904',
+    tags: ['APPLICAT', 'SHOWPLA']
+
+    // cloud_name: 'applicatworkshop',
+    // api_key: '646323879887636',
+    // api_secret: 'B-ROp8wTI_U5QvJmaQWOvuZ9H6E',
+    // tags: []
   },
 
   /**
