@@ -8,6 +8,8 @@
  * Written by Andy Yoon Yong Shin <andy.shin@applicat.co.kr>, 26/05/15
  *
  */
+var bcrypt = require('bcryptjs');
+var Promise = require('bluebird');
 
 module.exports = {
   checkEmail: checkEmail,
@@ -69,17 +71,28 @@ function checkEmail(req, res) {
 function login(req, res) {
 
   var params = req.allParams();
+  sails.log("params :::\n", params);
 
   return User.findOne({ email: params.identifier })
     .populate('profilePhoto')
     .then(function(user) {
       sails.log("user :::\n", user);
       // 사용자 찾음
-      if (user) return [user, user.validatePassword(params.password)];
-      // 사용자 찾지 못함
-      else return null;
+      var deferred = Promise.pending();
+      bcrypt.compare(params.password, user.password, function(err, res) {
+        if (err) {
+          deferred.reject(err);
+        }
+
+        if (!res) {
+          deferred.reject({ 'error': '비밀번호가 들렷습니다.' });
+        } else {
+          deferred.resolve(user);
+        }
+      });
+      return deferred.promise;
     })
-    .spread(function(user) {
+    .then(function(user) {
       if (user) {
         req.session.authenticated = true;
         var token = AuthService.getToken(user);
