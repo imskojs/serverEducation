@@ -46,17 +46,6 @@ module.exports.connections = {
   /**
    *  Image Server Config (Cloudinary)
    */
-  cloudinary: {
-    cloud_name: 'appdev',
-    api_key: '355231636137138',
-    api_secret: 'p_5ViDMlrlNZJFUP91trdUmo904',
-    tags: ['APPLICAT', 'SHOWPLA']
-
-    // cloud_name: 'applicatworkshop',
-    // api_key: '646323879887636',
-    // api_secret: 'B-ROp8wTI_U5QvJmaQWOvuZ9H6E',
-    // tags: []
-  },
 
   /**
    *  Push Message Config
@@ -68,6 +57,96 @@ module.exports.connections = {
   apnConfig: {
     "cert": __dirname + '/ssl/cert.pem',
     "key": __dirname + '/ssl/key.pem'
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  cloudinary: {
+    cloud_name: 'appdev',
+    api_key: '355231636137138',
+    api_secret: 'p_5ViDMlrlNZJFUP91trdUmo904',
+    tags: ['APPLICAT', 'SHOWPLA']
+
+    // cloud_name: 'applicatworkshop',
+    // api_key: '646323879887636',
+    // api_secret: 'B-ROp8wTI_U5QvJmaQWOvuZ9H6E',
+    // tags: []
   },
 
 };
