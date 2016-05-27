@@ -107,7 +107,7 @@ function find(req, res) {
   if (limit) {
     query.limit = limit + 1; // 실질적으로는 10이면 11개를 가져와 11개째가 있으면 더 10보다 상품이 더 많다고 표현함
   } else
-    query.limit = 100 + 1;  // 사실상 100개 이상 가지고 올 이유가 없기 때문에 100이상은 100개로 고정
+    query.limit = 100 + 1; // 사실상 100개 이상 가지고 올 이유가 없기 때문에 100이상은 100개로 고정
 
 
   // 넘길 data 수 포함 확인 (10: 10개를 넘기고 그다음 10개부터
@@ -137,7 +137,7 @@ function find(req, res) {
   //
   if (params.populate) {
     var populate = params.populate.split(',');
-    _.each(populate, function (propName) {
+    _.each(populate, function(propName) {
       if (Product.isAssociation(propName))
         queryPromise = queryPromise.populate(propName);
     });
@@ -155,30 +155,30 @@ function find(req, res) {
   // 상품을 찾고 총수를 찾고 난 뒤 결과를 관리하는 부분
   Promise.all([queryPromise, countPromise])
 
-    //   <-- then이랑 spread는 큰 차이점이 없지만 then은 결과를 하나의 Array에 결과를 넣어준다
-    //    .then(function(result){
-    //       result: [
-    //        '0': [
-    //            상품들  <-- products
-    //         ],
-    //        '1': 전체 숫자가  <-- count
-    //      ]
-    //    })
-    // spread로 결과값을 받으면 아래와 같이 결과가 나누어서 돌려준다 조금더 관리하기 쉬워진다.
+  //   <-- then이랑 spread는 큰 차이점이 없지만 then은 결과를 하나의 Array에 결과를 넣어준다
+  //    .then(function(result){
+  //       result: [
+  //        '0': [
+  //            상품들  <-- products
+  //         ],
+  //        '1': 전체 숫자가  <-- count
+  //      ]
+  //    })
+  // spread로 결과값을 받으면 아래와 같이 결과가 나누어서 돌려준다 조금더 관리하기 쉬워진다.
 
-    .spread(function (products, count) {
+  .spread(function(products, count) {
       // Limit으로 10를 변수로 가져왓으면 11개를 가져와 더 있는 지 체크 하는 부분
       var more = (products[limit - 1]) ? true : false;
       // 10 요청에 11개 가져왔을때 11개 째를 지우고 10개로 만든뒤 더 있다고 more: true 로 답변을 해준다. 11개째가 없으면 당연히 more: false 로  답변을 해준다.
-      if (more)products.splice(limit - 1, 1);
+      if (more) products.splice(limit - 1, 1);
 
       // res.ok는 답변에 http 답변 코드 200이 이미 들어가 있는 것이라 보면 된다
       // 아래에 답변은 res.send(200, {products: products, more: more, total: count})
       // 과 같습니다.
-      res.ok({products: products, more: more, total: count});
+      res.ok({ products: products, more: more, total: count });
     })
     // 간단한 에러 관리를 위해 전부 서버 잘못으로 돌리는 부분
-    .catch(function (err) {
+    .catch(function(err) {
       // 나중에 무슨 문제엿는지 체크 위해 error 로깅을 남긴다.
       sails.log.error(err);
 
@@ -211,7 +211,7 @@ function findOne(req, res) {
 
   // 필수 변수가 있는지 확인
   if (!params.id)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
   // Query를 만들기 준비
   var query = {
@@ -240,7 +240,7 @@ function findOne(req, res) {
   //
   if (params.populate) {
     var populate = params.populate.split(',');
-    _.each(populate, function (propName) {
+    _.each(populate, function(propName) {
       if (Product.isAssociation(propName))
         queryPromise = queryPromise.populate(propName);
     });
@@ -248,13 +248,13 @@ function findOne(req, res) {
 
   // 상품을 찾고 뒤 결과를 관리하는 부분
   Promise.all([queryPromise])
-    .spread(function (product) {
+    .spread(function(product) {
       // find와 다르게 Array가 아닌
       // 하나의 Object로 돌려받는다.
       res.ok(product);
     })
     // 간단한 에러 관리를 위해 전부 서버 잘못으로 돌리는 부분
-    .catch(function (err) {
+    .catch(function(err) {
       // 나중에 무슨 문제엿는지 체크 위해 error 로깅을 남긴다.
       sails.log.error(err);
 
@@ -292,13 +292,14 @@ function create(req, res) {
 
   // 필수 변수가 있는지 확인 controller에서 관리하는 필수 부분
   if (!product.name || !product.description)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
 
   // history record 남기기 나중에는
   // 관리자로 로그인 되어 있을시에만 가능하게 만든다
   // 그렇기 때문에 입증후 req.user 에 사용자의 대한 정보가 담겨 져있게 된다.
   //  보안 적용 후 다시 uncomment 하면 되는 부분이라고 보면 된다.
+  sails.log("req.user :::\n", req.user);
   product.owner = req.user.id;
   product.createdBy = req.user.id;
   product.updatedBy = req.user.id;
@@ -310,13 +311,13 @@ function create(req, res) {
 
   // create는 관련 모델을 새로 하나 만드는 함수 이다
   Product.create(product)
-    .then(function (product) {
+    .then(function(product) {
 
       // 만들고 완성된 상품을 돌려준다.
       res.ok(product);
     })
     // 간단한 에러 관리를 위해 전부 서버 잘못으로 돌리는 부분
-    .catch(function (err) {
+    .catch(function(err) {
       // 나중에 무슨 문제엿는지 체크 위해 error 로깅을 남긴다.
       sails.log.error(err);
 
@@ -356,7 +357,7 @@ function update(req, res) {
 
   // 필수 변수가 있는지 확인 controller에서 관리하는 필수 부분
   if (!product.id)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
   var id = product.id;
 
@@ -377,14 +378,14 @@ function update(req, res) {
 
   // udpate는 관련 모델을 수정하는 함수 이다
   // update({수정할 상품의 조건 현재로는 상품을 유니크한 id}, 어떻게 수정할것인가의 내용)
-  Product.update({id: id}, product)
-    .then(function (product) {
+  Product.update({ id: id }, product)
+    .then(function(product) {
 
       // 수정된 상품을 돌려준다.
       res.ok(product);
     })
     // 간단한 에러 관리를 위해 전부 서버 잘못으로 돌리는 부분
-    .catch(function (err) {
+    .catch(function(err) {
       // 나중에 무슨 문제엿는지 체크 위해 error 로깅을 남긴다.
       sails.log.error(err);
 
@@ -418,21 +419,21 @@ function destroy(req, res) {
 
   // 필수 변수가 있는지 확인 controller에서 관리하는 필수 부분
   if (!id)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
   // delete는 관련 모델을 지우는 함수 이다
   // destroy({지울 상품의 조건 현재로는 상품을 유니크한 id})
   // 조건에 맞는 상품들은 다 지워지기 때문에 조심해 하는 부분이 있다
   // e.g. {name: "바지"} 로 넣게 된다면 상품 이름 "바지" 인 상품은
   // 다 지워지게 된다
-  Product.destroy({id: id})
-    .then(function (products) {
+  Product.destroy({ id: id })
+    .then(function(products) {
 
       // 조건에 맞는 상품들은 다 지워지기 때문에 지워진 결과 상품도 Array로 오게 된다.
       res.ok(products);
     })
     // 간단한 에러 관리를 위해 전부 서버 잘못으로 돌리는 부분
-    .catch(function (err) {
+    .catch(function(err) {
       // 나중에 무슨 문제엿는지 체크 위해 error 로깅을 남긴다.
       sails.log.error(err);
 
@@ -443,4 +444,3 @@ function destroy(req, res) {
     });
 
 }
-
