@@ -73,7 +73,7 @@ function login(req, res) {
   return User.findOne({ email: params.identifier })
     .populate('profilePhoto')
     .then(function(user) {
-      sails.log(JSON.stringify(user));
+      sails.log("user :::\n", user);
       // 사용자 찾음
       if (user) return [user, user.validatePassword(params.password)];
       // 사용자 찾지 못함
