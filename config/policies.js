@@ -50,10 +50,9 @@ module.exports.policies = {
     'register': true
   },
 
-  'PhotoController': [
-    'BearerAuthAdmin',
-    'SessionAuth'
-  ],
+  'PhotoController': {
+    '*': true
+  },
 
   'ProductController': {
     '*': [
