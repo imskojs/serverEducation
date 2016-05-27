@@ -78,19 +78,20 @@ function login(req, res) {
     .then(function(user) {
       sails.log("user :::\n", user);
       // 사용자 찾음
-      var deferred = Promise.pending();
-      bcrypt.compare(params.password, user.password, function(err, res) {
-        if (err) {
-          deferred.reject(err);
-        }
+      // var deferred = Promise.pending();
+      // bcrypt.compare(params.password, user.password, function(err, res) {
+      //   if (err) {
+      //     deferred.reject(err);
+      //   }
 
-        if (!res) {
-          deferred.reject({ 'error': '비밀번호가 들렷습니다.' });
-        } else {
-          deferred.resolve(user);
-        }
-      });
-      return deferred.promise;
+      //   if (!res) {
+      //     deferred.reject({ 'error': '비밀번호가 들렷습니다.' });
+      //   } else {
+      //     deferred.resolve(user);
+      //   }
+      // });
+      // return deferred.promise;
+      return user;
     })
     .then(function(user) {
       if (user) {
