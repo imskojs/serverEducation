@@ -36,18 +36,18 @@ function checkEmail(req, res) {
 
   // 필수 변수가 있는지 확인
   if (!params.email)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
   // 동일한 이메일 사용자 찾기
-  User.findOne({email: params.email})
-    .then(function (user) {
+  User.findOne({ email: params.email })
+    .then(function(user) {
       // 결과
-      if (user) res.send(200, {isAvailable: false});
-      else res.send(200, {isAvailable: true});
+      if (user) res.send(200, { isAvailable: false });
+      else res.send(200, { isAvailable: true });
     })
-    .catch(function (err) {
+    .catch(function(err) {
       sails.log.error(err);
-      res.send(500, {message: "이메일 찾기를 실패 했습니다."});
+      res.send(500, { message: "이메일 찾기를 실패 했습니다." });
     });
 
 }
@@ -70,22 +70,23 @@ function login(req, res) {
 
   var params = req.allParams();
 
-  User.findOne({email: params.identifier})
-    .then(function (user) {
+  return User.findOne({ email: params.identifier })
+    .populate('profilePhoto')
+    .then(function(user) {
       sails.log(JSON.stringify(user));
       // 사용자 찾음
       if (user) return [user, user.validatePassword(params.password)];
       // 사용자 찾지 못함
       else return null;
     })
-    .spread(function (user) {
+    .spread(function(user) {
       if (user) {
         req.session.authenticated = true;
         var token = AuthService.getToken(user);
-        return res.send(200, {user: user, token: token});
-      } else return res.send(400, {message: "등록 되지 않은 사용자 입니다."});
+        return res.send(200, { user: user, token: token });
+      } else return res.send(400, { message: "등록 되지 않은 사용자 입니다." });
     })
-    .catch(function (err) {
+    .catch(function(err) {
       sails.log(err);
       return res.send(400, err);
     });
@@ -136,7 +137,7 @@ function register(req, res) {
 
   // 필수 변수가 있는지 확인
   if (!user.email || !user.password)
-    return res.send(400, {message: "모든 변수를 입력해주세요."});
+    return res.send(400, { message: "모든 변수를 입력해주세요." });
 
 
   // 필요없는 association 방지
@@ -144,27 +145,24 @@ function register(req, res) {
   delete user.reviews;
   delete user.role;
 
-  User.findOne({email: user.email})
-    .then(function (foundUser) {
+  User.findOne({ email: user.email })
+    .then(function(foundUser) {
       if (!foundUser) return User.create(user);
       else return null;
     })
-    .then(function (createdUser) {
+    .then(function(createdUser) {
       if (createdUser) {
         res.ok(createdUser);
         createdUser.owner = createdUser.id;
         createdUser.createdBy = createdUser.id;
         createdUser.updatedBy = createdUser.id;
         createdUser.save();
-      }
-      else res.send(400, {message: "이미 동일한 이메일을 사용하는 사용자가 존재합니다."});
+      } else res.send(400, { message: "이미 동일한 이메일을 사용하는 사용자가 존재합니다." });
     })
-    .catch(function (err) {
+    .catch(function(err) {
       sails.log.error(err);
       res.send(500, {
         message: "사용자 만들기를 실패 했습니다."
       });
     });
 }
-
-
